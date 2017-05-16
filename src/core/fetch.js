@@ -1,4 +1,4 @@
-import { REST_API, RESTTMP } from './rest-endpoint';
+import { REST_API, RESTTMP, REST_API_CURRENCY } from './rest-endpoint';
 
 export const METHOD = {
     get: 'GET',

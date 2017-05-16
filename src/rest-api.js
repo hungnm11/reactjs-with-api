@@ -36,13 +36,19 @@ class API extends React.Component {
 
     render() {
         console.log('ITEMS: ', this.state);
-        return(
+        const item = this.state.data.map(item => { 
+                    return (
+                            <li key={item.imdbID}>
+                                <p><img src={item.Poster}/></p>
+                                {item.Title}
+                            </li>
+                        );
+                  });
+                
+        return (
             <div>Items:
                 <ul>
-                {this.state.data.map(item => { 
-                    return <li key={item.imdbID}>{item.Title}</li>
-                  }) 
-                }
+                {item}
                 </ul>
              </div>
         );
