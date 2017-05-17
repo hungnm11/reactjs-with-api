@@ -25,8 +25,10 @@ class API extends React.Component {
     }
 
     getData() {
-        const params = {};
-        return fetch(PARAMS).then(result => {
+        const params = {
+            key: '38947934',
+        };
+        return fetch(PARAMS, params).then(result => {
             this.setState({
                 data: result.Search,
                 total: result.totalResults

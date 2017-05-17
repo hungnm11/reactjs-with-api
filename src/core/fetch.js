@@ -18,7 +18,7 @@ let $fetch = (urn, params, method = METHOD.get) => {
         break;
         case METHOD.get: 
         default:
-            requestPromise = fetch(uri, params);
+            requestPromise = fetch(uri + (params ? `?${paramsToQuery(params)}` : ''));
         break;
     }
 
@@ -26,5 +26,16 @@ let $fetch = (urn, params, method = METHOD.get) => {
     return fetchData;
     
 };
+
+const params = {
+    name: 'jaja',
+    value: 234
+}
+
+function paramsToQuery(params) {
+    return Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
+}
+
+console.log(paramsToQuery(params));
 
 export default $fetch;
