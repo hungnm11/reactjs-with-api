@@ -3,6 +3,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const webpack = require('webpack');
 
+const isProd = process.env.NODE_ENV === 'production'; // true or false
+const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
+const cssProd = ExtractTextPlugin.extract({
+                  fallback: 'style-loader',
+                  loader: ['css-loader','sass-loader'],
+                  publicPath: '/dist'
+                });
+
+const cssConfig = isProd ? cssProd : cssDev;
+
 module.exports = {
   entry: {
     app: './src/app.js',
@@ -16,7 +26,7 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: cssConfig
       }, {
         test: /\.js$/,
         exclude: '/node_modules/',
@@ -47,7 +57,7 @@ module.exports = {
       template: './src/index.html', // Load a custom template (ejs by default see the FAQ for details)
     }),
     new HtmlWebpackPlugin({title: 'Contact Page', hash: true, chunks: ['contact'], filename: 'contact.html', template: './src/contact.html'}),
-    new ExtractTextPlugin({filename: 'app.css', disable: true, allChunks: true}),
+    new ExtractTextPlugin({filename: 'app.css', disable: !isProd, allChunks: true}),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
   ]
