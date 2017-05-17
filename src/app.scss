@@ -1,6 +1,15 @@
 body {
-    background-color: pink;
-    p {
-        color: red;
+  ul {
+    margin: 0;
+    li {
+      list-style: none;
+      display: inline-block;
+      p {
+        width: auto;
+        img {
+          width: 50%;
+        }
+      }
     }
+  }
 }

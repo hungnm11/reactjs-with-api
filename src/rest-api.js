@@ -39,13 +39,15 @@ class API extends React.Component {
         return (
           <li key={item.imdbID}>
             <p><img src={item.Poster}/></p>
-            {item.Title}
+            <p>{item.Title}</p>
+            <p>{item.Type}</p>
+            <p>{item.Year}</p>
           </li>
         );
       });
 
     return (
-      <div>Items:
+      <div>MOVIES:
         <ul>
           {item}
         </ul>
