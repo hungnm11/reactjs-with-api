@@ -4,6 +4,5 @@ import App from './rest-api';
 import './app.scss';
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+  <App/>, document.getElementById('root')
+  );
