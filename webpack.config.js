@@ -1,23 +1,22 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/app.js',
+    entry: {
+        app: './src/app.js',
+        contact: './src/contact.js'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'app.bundle.js'
+        filename: '[name].bundle.js'
     },
     module: {
         rules: [
             { 
                 test: /\.scss$/, 
-                use: ExtractTextPlugin.extract({
-                        fallbackLoader: 'style-loader',
-                        loader: ['css-loader','sass-loader'],
-                        publicPath: '/dist'
-                    }
-                )
+                use: ['style-loader','css-loader','sass-loader']
             },
             {
                 test: /\.js$/,
@@ -38,22 +37,33 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         // port: 9000,
-        stats: "errors-only",
+        // stats: "errors-only",
+        hot: true,
         open: true
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Project Demo',
-            minify: {
-                collapseWhitespace: true
-            },
+            // minify: {
+            //     collapseWhitespace: true
+            // },
             hash: true,
+            excludeChunks: ['contact'],
             template: './src/index.html', // Load a custom template (ejs by default see the FAQ for details)
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Contact Page',
+            hash: true,
+            chunks: ['contact'],
+            filename: 'contact.html',
+            template: './src/contact.html'
         }),
         new ExtractTextPlugin({
             filename: 'app.css',
-            disable: false,
+            disable: true,
             allChunks: true,
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
     ]
 }
